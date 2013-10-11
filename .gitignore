@@ -1,0 +1,5 @@
+FSharp.EventSource.v11.suo
+*.user
+packages/
+bin/
+obj/
