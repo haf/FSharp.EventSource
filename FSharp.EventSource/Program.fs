@@ -9,7 +9,7 @@ open Option
 
 // Example from https://github.com/Yaffle/EventSource
 // Copyright Henrik Feldt 2013
-let asyncServer () = HttpListener.Start("http://*:8080/", fun ctx ->
+let asyncServer listen = HttpListener.Start(listen, fun ctx ->
   let resp = ctx.Response
   let req  = ctx.Request
 
@@ -78,7 +78,7 @@ let asyncServer () = HttpListener.Start("http://*:8080/", fun ctx ->
 
 [<EntryPoint>]
 let main argv =
-  let server = asyncServer ()
+  let server = asyncServer "http://*:8080/"
   printfn "Press return to exit..."
   Console.ReadLine() |> ignore
   server.Cancel()

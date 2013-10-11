@@ -55,7 +55,7 @@ module AsyncExtensions =
       member x.Bind(t:Task, f:unit -> Async<'R>) : Async<'R> = async.Bind(Async.AwaitTask t, f)
 
 
-module Option =
+module internal Option =
   let as_option = function
     | null -> None
     | x    -> Some x
@@ -70,7 +70,7 @@ module Option =
     | None -> b
     | Some x -> x
 
-module Sugar =
+module internal Sugar =
   open Option
   open System
   open System.IO
@@ -124,6 +124,7 @@ module Streams =
   open System.IO
   open System.Text
 
+  /// Asynchronouslyo write from the 'from' stream to the 'to' stream.
   let (<<!) (toStream : Stream) (from : Stream) =
     let buf = Array.zeroCreate<byte> 0x2000
     let rec doBlock () =
@@ -137,15 +138,9 @@ module Streams =
           return! doBlock () }
     doBlock ()
 
+  /// Asynchronously write from the string 'data', utf8 encoded to the 'stream'.
   let (<<.) (stream : Stream) (data : string) =
     async {
       let data = Encoding.UTF8.GetBytes data
       use ms = new IO.MemoryStream(data)
       do! stream <<! ms }
-
-  let (<<~) (stream : Stream) (data : string) =
-    async { 
-      let data = Encoding.ASCII.GetBytes data
-      use ms = new IO.MemoryStream(data)
-      do! stream <<! ms }
-
