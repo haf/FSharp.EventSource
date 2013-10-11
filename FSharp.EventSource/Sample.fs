@@ -2,10 +2,11 @@
 open System.Net
 open System.Text
 
-open FSharp.EventSource
+open FSharp
 open Sugar
-open Streams
 open Option
+open Streams
+open FSharp.EventSource
 
 // Example from https://github.com/Yaffle/EventSource
 // Copyright Henrik Feldt 2013
@@ -42,6 +43,7 @@ let asyncServer listen = HttpListener.Start(listen, fun ctx ->
       ; "Cache-Control"               => "no-cache"
       ; "Access-Control-Allow-Origin" => "*" ]
       |> List.iter(fun (k, v) -> resp.AddHeader(k, v))
+      resp.SendChunked       <- false
       resp.StatusDescription <- "OK"
 
       do! out <<. ":" + new String(' ', 2048) + "\n" // 2kB padding for IE
@@ -53,10 +55,9 @@ let asyncServer listen = HttpListener.Start(listen, fun ctx ->
 
     let write i =
       async {
-        do! out <<. "id: " + i + "\n"
-        do! out <<. "data: " + i + ";\n\n"
-        do! out.FlushAsync()
-        do! Async.Sleep(1000) }
+        let msg = Message.Create(id = i, data = string i)
+        do! msg |> send out
+        do! Async.Sleep 1000 }
 
     async {
       let last_evt_id =

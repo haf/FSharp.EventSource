@@ -40,32 +40,21 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
   <ItemGroup>
-    <Compile Include="Api.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="Sugar.fs" />
+    <Compile Include="EventSource.fs" />
+    <Compile Include="Sample.fs" />
     <None Include="App.config" />
-    <None Include="packages.config" />
     <Content Include="index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="eventsource.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Actor">
-      <HintPath>..\packages\FSharp.Actor.1.0.134\lib\net40\FSharp.Actor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FSharp.CodeFormat">
-      <HintPath>..\packages\FSharp.Formatting.1.0.15\lib\net40\FSharp.CodeFormat.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FSharp.CompilerBinding">
-      <HintPath>..\packages\FSharp.Formatting.1.0.15\lib\net40\FSharp.CompilerBinding.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FSharp.Markdown">
-      <HintPath>..\packages\FSharp.Formatting.1.0.15\lib\net40\FSharp.Markdown.dll</HintPath>
+      <HintPath>..\packages\FSharp.Actor.1.0.138\lib\net40\FSharp.Actor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />

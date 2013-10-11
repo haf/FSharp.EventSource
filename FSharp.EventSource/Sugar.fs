@@ -1,4 +1,4 @@
-﻿namespace FSharp.EventSource
+﻿namespace FSharp
 
 open System
 open System.Net
@@ -141,6 +141,7 @@ module Streams =
   /// Asynchronously write from the string 'data', utf8 encoded to the 'stream'.
   let (<<.) (stream : Stream) (data : string) =
     async {
+      printf "%s" data
       let data = Encoding.UTF8.GetBytes data
       use ms = new IO.MemoryStream(data)
       do! stream <<! ms }
