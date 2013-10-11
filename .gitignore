@@ -3,3 +3,4 @@ FSharp.EventSource.v11.suo
 packages/
 bin/
 obj/
+build/
