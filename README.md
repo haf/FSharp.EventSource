@@ -12,6 +12,10 @@ browser support. Have a look at Sample.fs for an example on how to use it.
 
 MIT Copyright Henrik Feldt 2013
 
+### Notes
+
+Compile: `bundle && rake` or open in Visual Studio 2012 or in Xamarin Studio.
+
 ### Things to consider
 
  - I've added a dependency on FSharp.Actor because I will be adding support for
