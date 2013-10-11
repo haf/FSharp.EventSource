@@ -23,7 +23,7 @@ nugets_pack :create_nugets => ['build/pkg', :versioning, :build] do |p|
   p.files   = FileList['**/*.{fsproj,nuspec}'].
     exclude(/Tests/).
     exclude(/Spec/).
-    exclude(/sample/).
+    exclude(/Sample/).
     exclude(/packages/)
   p.out     = 'build/pkg'
   p.exe     = 'buildsupport/NuGet.exe'
@@ -36,8 +36,6 @@ nugets_pack :create_nugets => ['build/pkg', :versioning, :build] do |p|
     m.copyright     = 'Henrik Feldt'
     m.release_notes = "Full version: #{ENV['BUILD_VERSION']}."
   end
-
-  p.gen_symbols
 end
 
 task :default => :create_nugets
