@@ -5,7 +5,7 @@ Stream Updates with [Server-Sent Events](http://www.w3.org/TR/eventsource/).
 Current status: gives you an API to write to the browser.
 
 Use together with
-[polyfille](https://github.com/remy/polyfills/blob/master/EventSource.js) for
+[polyfill](https://github.com/remy/polyfills/blob/master/EventSource.js) for
 browser support. Have a look at Sample.fs for an example on how to use it.
 
 ## License
