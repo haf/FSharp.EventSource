@@ -5,7 +5,6 @@ module EventSource =
   // welcome to a stringly typed API
 
   open FSharp
-  open Sugar
   open Streams
   open System.IO
 
@@ -65,3 +64,63 @@ module EventSource =
       do! msg.``type`` |> lift_opt (event_type out)
       do! msg.data |> data out
       return! dispatch out }
+
+  /// This function composes the passed function f with
+  /// the hand-shake required to start a new event-stream protocol
+  /// session with the browser.
+  let hand_shake f (ctx : System.Net.HttpListenerContext) =
+    let (=>) a b = (a, b)
+    let resp = ctx.Response
+    let req  = ctx.Request
+    let out  = resp.OutputStream
+    async {
+      [ "Content-Type"                => "text/event-stream; charset=utf-8"
+      ; "Cache-Control"               => "no-cache"
+      ; "Access-Control-Allow-Origin" => "*" ]
+      |> List.iter(fun (k, v) -> resp.AddHeader(k, v))
+
+      // Microsoft has buggy docs stating I can 'send data raw', but there's no API for
+      // that, so if on mono which behaves, don't send chunked according to the W3 spec,
+      // otherwise send chunked
+      resp.SendChunked       <- if System.Type.GetType("Mono.Runtime") <> null then false else true
+      resp.StatusDescription <- "OK"
+
+      // Buggy Internet Explorer; 2kB of comment padding for IE
+      do! new System.String(' ', 2048) |> comment out
+      do! 2000u |> retry out
+            
+      return! f ctx }
+
+[<AutoOpen>]
+module HttpListenerExtensions =
+  open Option
+  open EventSource
+
+  open System
+  open System.Net
+  open System.Threading
+
+  type System.Net.HttpListener with
+    /// Asynchronously retrieves the next incoming request
+    member x.AsyncGetContext() = 
+      Async.FromBeginEnd(x.BeginGetContext, x.EndGetContext)
+
+  type System.Net.HttpListener with
+    /// Starts an HTTP server on the specified URL with the
+    /// specified asynchronous function for handling requests
+    static member Start(url, f, ?cts) =
+      let cts = defaultArg cts <| new CancellationTokenSource()
+      Async.Start
+        ((async {
+            use listener = new HttpListener()
+            listener.Prefixes.Add(url)
+            listener.Start()
+            while true do 
+              let! context = listener.AsyncGetContext()
+              Async.Start(f context, cts.Token) }),
+            cancellationToken = cts.Token)
+      cts
+
+    static member StartEventSource(url, f, ?cts) =
+      let cts = defaultArg cts <| new CancellationTokenSource()
+      System.Net.HttpListener.Start(url, hand_shake f, cts)

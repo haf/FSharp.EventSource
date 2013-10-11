@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.EventSource", "FSharp.EventSource\FSharp.EventSource.fsproj", "{47101131-C961-4784-92F5-2689AF357BC1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{2E2E31CE-F636-4EB7-B7B7-78B5B1FC9AF0}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.EventSource.Sample", "FSharp.EventSource.Sample\FSharp.EventSource.Sample.fsproj", "{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +17,15 @@ Global
 		{47101131-C961-4784-92F5-2689AF357BC1}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{47101131-C961-4784-92F5-2689AF357BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47101131-C961-4784-92F5-2689AF357BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2933DC0B-C657-4AA9-80FF-1C4F8D6ED04F} = {2E2E31CE-F636-4EB7-B7B7-78B5B1FC9AF0}
 	EndGlobalSection
 EndGlobal

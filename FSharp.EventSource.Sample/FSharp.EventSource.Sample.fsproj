@@ -5,12 +5,12 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>47101131-c961-4784-92f5-2689af357bc1</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>FSharp.EventSource</RootNamespace>
-    <AssemblyName>FSharp.EventSource</AssemblyName>
+    <ProjectGuid>2933dc0b-c657-4aa9-80ff-1c4f8d6ed04f</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FSharp.EventSource.Sample</RootNamespace>
+    <AssemblyName>FSharp.EventSource.Sample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <Name>FSharp.EventSource</Name>
+    <Name>FSharp.EventSource.Sample</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -20,7 +20,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>bin\Release\FSharp.EventSource.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\FSharp.EventSource.Sample.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -28,9 +28,14 @@
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
   <ItemGroup>
-    <Compile Include="Async.fs" />
-    <Compile Include="EventSource.fs" />
+    <Compile Include="Sample.fs" />
     <None Include="App.config" />
+    <Content Include="eventsource.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -40,6 +45,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\FSharp.EventSource\FSharp.EventSource.fsproj">
+      <Name>FSharp.EventSource</Name>
+      <Project>{47101131-c961-4784-92f5-2689af357bc1}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
