@@ -5,12 +5,8 @@
 
   let (<!>) a b =
     match a with
-    | None -> 
-      System.Console.WriteLine("a: {0}", a)
-      b
-    | Some x -> 
-      System.Console.WriteLine("a: {0}", a)
-      Some x
+    | None -> b
+    | Some x -> Some x
 
   let (<.>) a b =
     match a with
@@ -75,7 +71,7 @@ let counter_demo (ctx : HttpListenerContext) =
     async {
       let msg = Message.Create(id = i, data = string i)
       do! msg |> send out
-      do! Async.Sleep 1000 }
+      do! Async.Sleep 100 }
 
   async {
     let last_evt_id =
